@@ -4,18 +4,22 @@ import {TransactionContext} from './transContext';
 function Child() {
      let {transactions,addTransaction} = useContext(TransactionContext)
 
-    let [newDesc,setDesc] = useState("");
+    let [newDesc,setDesc] = useState('');
     let [newAmount,setAmount] = useState(0);
 
      const handleSubmit = (e)=>{
          e.preventDefault();
+        if(Number(newAmount)=== 0){
+            alert("Please Enter Correct Value");
+            e.target.reset();
+            return false;
+        }
+
          addTransaction({
              amount: Number(newAmount),
              desc: newDesc
          })
-         console.log(newDesc,newAmount)
-         newAmount = 0;
-         newDesc = "";
+         e.target.reset();
      }
      const getIncome = ()=>{
          let income = 0;
