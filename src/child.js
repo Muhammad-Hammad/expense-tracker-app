@@ -1,18 +1,47 @@
-import {useContext} from 'react'
+import {useContext, useState} from 'react'
 import {TransactionContext} from './transContext';
 
 function Child() {
-     let {transactions} = useContext(TransactionContext)
-     console.log(transactions)
+     let {transactions,addTransaction} = useContext(TransactionContext)
+
+    let [newDesc,setDesc] = useState("");
+    let [newAmount,setAmount] = useState(0);
+
+     const handleSubmit = (e)=>{
+         e.preventDefault();
+         addTransaction({
+             amount: Number(newAmount),
+             desc: newDesc
+         })
+         console.log(newDesc,newAmount)
+         newAmount = 0;
+         newDesc = "";
+     }
+     const getIncome = ()=>{
+         let income = 0;
+         for (var i = 0; i < transactions.length; i++){
+             if(transactions[i].amount > 0)
+                income += transactions[i].amount
+         }
+         return income;
+     }
+     const getExpense = ()=>{
+         let expense = 0;
+         for(var i=0; i< transactions.length; i++){
+             if(transactions[i].amount < 0)
+             expense += transactions[i].amount
+         }
+         return expense;
+     }
 
     return (
         <div className="container">
             <h1 className="text-center">Expense Tracker</h1>
-            <h3>Your Balance <br/> $260</h3>
+            <h3>Your Balance <br/> {getIncome() + getExpense()}</h3>
 
             <div className="expense-container">
-                <h3>INCOME <br/> $500</h3>
-                <h3>EXPENSE <br/> $250</h3>
+                <h3>INCOME <br/> ${getIncome()}</h3>
+                <h3>EXPENSE <br/> ${getExpense()}</h3>
             </div>
             <h3>History <hr/></h3>
             <ul className="transaction-list">
@@ -29,15 +58,15 @@ function Child() {
             <h3>Add new Transaction</h3>
             <hr/>
             
-            <form className="transaction-form">
+            <form className="transaction-form" onSubmit={handleSubmit}>
                 <label>
                     Enter Description <br/>
-                    <input type="text" required/>
+                    <input type="text" onChange={(ev)=>setDesc(ev.target.value)} required/>
                 </label>
                 <br/>
                 <label>
                     Enter Amount <br/>
-                    <input type="number" required/>
+                    <input type="number" onChange={(ev)=>setAmount(ev.target.value)} required/>
                 </label>
                 <br/>
                 <input type="submit" value="Add transaction"/>

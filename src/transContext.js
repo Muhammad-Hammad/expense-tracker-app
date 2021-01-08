@@ -4,7 +4,8 @@ import TransactionReducer from "./transReducer"
 const initialTransactions =[
     { amount: 500, desc: "Cash" },
     { amount: -200, desc: "book" },
-    { amount: -40, desc: "Camera" }
+    { amount: -40, desc: "Camera" },
+    { amount: 500, desc: "anda"}
 ]
 
 export  const TransactionContext = createContext(initialTransactions);
