@@ -1,4 +1,4 @@
-# Creating Expense Tracker App on React with Create-React-App
+# Expense Tracker App on React with Create-React-App
 # URL: http://hammad-surge-expense-tracker-app.surge.sh/
 # Getting Started with Create React App
 
