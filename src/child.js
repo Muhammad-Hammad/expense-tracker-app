@@ -3,7 +3,8 @@ import {TransactionContext} from './transContext';
 
 function Child() {
      let {transactions,addTransaction} = useContext(TransactionContext)
-
+     let {deleteTransaction} = useContext(TransactionContext)
+    console.log(transactions)
     let [newDesc,setDesc] = useState('');
     let [newAmount,setAmount] = useState(0);
 
@@ -16,11 +17,13 @@ function Child() {
         }
 
          addTransaction({
+            
              amount: Number(newAmount),
              desc: newDesc
          })
          e.target.reset();
      }
+     
      const getIncome = ()=>{
          let income = 0;
          for (var i = 0; i < transactions.length; i++){
@@ -53,7 +56,8 @@ function Child() {
                 {transactions.map((transObj,ind)=>{
                     return(
                         <li key={ind}>
-                    <span>{transObj.desc}</span>
+                            
+                    <span><button onClick={()=>deleteTransaction(ind)}>X</button>{transObj.desc}</span>
                     <span>{transObj.amount}</span>
                 </li>
                     )
